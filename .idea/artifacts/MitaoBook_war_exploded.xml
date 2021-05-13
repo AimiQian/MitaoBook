@@ -13,6 +13,12 @@
         <element id="directory" name="classes">
           <element id="module-output" name="MitaoBook" />
         </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:8.0.24" />
+          <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:3.11.4" />
+          <element id="library" level="project" name="Maven: com.alibaba:druid:1.2.6" />
+          <element id="library" level="project" name="Maven: commons-dbutils:commons-dbutils:1.7" />
+        </element>
       </element>
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/target/MitaoBook-1.0-SNAPSHOT/META-INF/MANIFEST.MF" />
