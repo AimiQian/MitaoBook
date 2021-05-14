@@ -1,6 +1,7 @@
 package com.mitao.web;
 
 import com.mitao.pojo.Book;
+import com.mitao.pojo.Page;
 import com.mitao.service.BookService;
 import com.mitao.service.impl.BookServiceImpl;
 import com.mitao.utils.WebUtils;
@@ -16,11 +17,12 @@ public class BookServlet extends BaseServlet {
     BookService bookService = new BookServiceImpl();
 
     protected void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        int pageNo = WebUtils.parseInt(request.getParameter("pageNo"),0) + 1;
         Book book = WebUtils.copyParamToBean(request.getParameterMap(),new Book());
         bookService.addBook(book);
 //        request.getRequestDispatcher("/manager/bookServlet?action=list").forward(request,response);
 
-        response.sendRedirect(request.getContextPath() + "/manager/bookServlet?action=list");
+        response.sendRedirect(request.getContextPath() + "/manager/bookServlet?action=page&pageNo=" + pageNo);
 
     }
 
@@ -28,7 +30,7 @@ public class BookServlet extends BaseServlet {
         String idString = request.getParameter("id");
         int id = WebUtils.parseInt(idString,0);
         bookService.deleteBookById(id);
-        response.sendRedirect(request.getContextPath() + "/manager/bookServlet?action=list");
+        response.sendRedirect(request.getContextPath() + "/manager/bookServlet?action=page&pageNo=" + request.getParameter("pageNo"));
 
     }
 
@@ -36,7 +38,7 @@ public class BookServlet extends BaseServlet {
 
         Book book = WebUtils.copyParamToBean(request.getParameterMap(),new Book());
         bookService.updateBook(book);
-        response.sendRedirect(request.getContextPath() + "/manager/bookServlet?action=list");
+        response.sendRedirect(request.getContextPath() + "/manager/bookServlet?action=page&pageNo=" + request.getParameter("pageNo"));
 
 
 
@@ -57,5 +59,13 @@ public class BookServlet extends BaseServlet {
 
     }
 
+    protected void page(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int pageNo = WebUtils.parseInt(request.getParameter("pageNo"), 1);
+        int pageSize = WebUtils.parseInt(request.getParameter("pageSize"), Page.PAGE_SIZE);
 
+
+        Page<Book> page = bookService.page(pageNo,pageSize);
+        request.setAttribute("page",page);
+        request.getRequestDispatcher("/pages/manager/book_manager.jsp").forward(request,response);
+    }
 }

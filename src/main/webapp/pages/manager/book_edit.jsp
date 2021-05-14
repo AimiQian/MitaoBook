@@ -29,6 +29,7 @@
 		
 		<div id="main">
 			<form action="manager/bookServlet" method="get">
+				<input type="hidden" name="pageNo" value="${param.pageNo}">
 				<input type="hidden" name="action" value="${param.method}">
 				<input type="hidden" name="id" value="${requestScope.book.id}">
 				<table>
@@ -50,10 +51,7 @@
 					</tr>	
 				</table>
 			</form>
-			
-	
 		</div>
-
 		<%@include file="/pages/common/footer.jsp"%>
 </body>
 </html>

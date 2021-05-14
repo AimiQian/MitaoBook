@@ -33,15 +33,15 @@
 				<td>库存</td>
 				<td colspan="2">操作</td>
 			</tr>		
-			<c:forEach items="${requestScope.books}" var="book">
+			<c:forEach items="${requestScope.page.items}" var="book">
 					<tr>
 						<td>${book.name}</td>
 						<td>${book.price}</td>
 						<td>${book.author}</td>
 						<td>${book.sales}</td>
 						<td>${book.stock}</td>
-						<td><a href="manager/bookServlet?action=getBook&id=${book.id}&method=update">Edit</a></td>
-						<td><a class="deleteClass" href="manager/bookServlet?action=delete&id=${book.id}">Delete</a></td>
+						<td><a href="manager/bookServlet?action=getBook&id=${book.id}&method=update&pageNo=${requestScope.page.pageNo}">Edit</a></td>
+						<td><a class="deleteClass" href="manager/bookServlet?action=delete&id=${book.id}&pageNo=${requestScope.page.pageNo}">Delete</a></td>
 					</tr>
 
 			</c:forEach>
@@ -53,11 +53,78 @@
 				<td></td>
 				<td></td>
 				<td></td>
-				<td><a href="pages/manager/book_edit.jsp?method=add">添加图书</a></td>
+				<td><a href="pages/manager/book_edit.jsp?method=add&pageNo=${requestScope.page.pageTotal}">添加图书</a></td>
 			</tr>
 		</table>
-	</div>
 
+		<div id="page_nav">
+			<c:if test="${requestScope.page.pageNo > 1}">
+				<a href="manager/bookServlet?action=page&pageNo=1">首页</a>
+				<a href="manager/bookServlet?action=page&pageNo=${requestScope.page.pageNo-1}">上一页</a>
+<%--				<a href="#">${requestScope.page.pageNo-1}</a>--%>
+			</c:if>
+			<%--			Begin--%>
+			<c:choose>
+				<c:when test="${requestScope.page.pageTotal <= 5}">
+					<c:set var="begin" value="1" />
+					<c:set var="end" value="${requestScope.page.pageTotal}" />
+				</c:when>
+				<c:when test="${requestScope.page.pageTotal > 5}">
+					<c:choose>
+						<c:when test="${requestScope.page.pageNo <= 3}">
+							<c:set var="begin" value="1" />
+							<c:set var="end" value="5" />
+						</c:when>
+						<c:when test="${requestScope.page.pageNo > requestScope.page.pageTotal - 3}">
+							<c:set var="begin" value="${requestScope.page.pageTotal - 4}" />
+							<c:set var="end" value="${requestScope.page.pageTotal}" />
+						</c:when>
+						<c:otherwise>
+							<c:set var="begin" value="${requestScope.page.pageNo - 2}" />
+							<c:set var="end" value="${requestScope.page.pageNo + 2}" />
+						</c:otherwise>
+					</c:choose>
+				</c:when>
+			</c:choose>
+
+			<c:forEach begin="${begin}" end="${end}" var="i">
+				<c:if test="${i == requestScope.page.pageNo}">
+					【${i}】
+				</c:if>
+				<c:if test="${i != requestScope.page.pageNo}">
+					<a href="manager/bookServlet?action=page&pageNo=${i}">${i}</a>
+				</c:if>
+			</c:forEach>
+
+			<%--			End--%>
+<%--			【${requestScope.page.pageNo}】--%>
+
+			<c:if test="${requestScope.page.pageNo < requestScope.page.pageTotal}">
+<%--				<a href="#">${requestScope.page.pageNo+1}</a>--%>
+				<a href="manager/bookServlet?action=page&pageNo=${requestScope.page.pageNo+1}">下一页</a>
+				<a href="manager/bookServlet?action=page&pageNo=${requestScope.page.pageTotal}">末页</a>
+			</c:if>
+
+			共${requestScope.page.pageTotal}页，${requestScope.page.pageTotalCount}条记录 到第<input value="${param.pageNo}" name="pn" id="pn_input"/>页
+			<input id="searchPageBtn" type="button" value="确定">
+
+				<script type="text/javascript">
+					$(function () {
+						$("#searchPageBtn").click(function () {
+							var pageNo = $("#pn_input").val();
+							var pageTotal = ${requestScope.page.pageTotal};
+							if(pageNo < 1 || pageNo > pageTotal ){
+								alert("Invalid Page Number!");
+								return false;
+							}
+							else{
+								location.href = "${pageScope.basePath}manager/bookServlet?action=page&pageNo=" + pageNo;
+							}
+						})
+					})
+				</script>
+		</div>
+	</div>
 	<%@include file="/pages/common/footer.jsp"%>
 </body>
 </html>

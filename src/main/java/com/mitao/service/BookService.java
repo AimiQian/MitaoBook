@@ -1,6 +1,7 @@
 package com.mitao.service;
 
 import com.mitao.pojo.Book;
+import com.mitao.pojo.Page;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface BookService {
     public Book queryBookById(Integer id);
 
     public List<Book> queryBooks();
+
+    Page<Book> page(int pageNo, int pageSize);
 }
