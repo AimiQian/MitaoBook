@@ -1,8 +1,6 @@
 package com.mitao.service;
 
-import com.mitao.pojo.Cart;
-import com.mitao.pojo.Order;
-import com.mitao.pojo.OrderItem;
+import com.mitao.pojo.*;
 
 import java.util.List;
 
@@ -18,4 +16,10 @@ public interface OrderService {
     public void receiveOrder(String orderId);
 
     public List<OrderItem> showOrderDetail(String orderId);
+
+    public Page<Order> pageAllOrders(int pageNo, int pageSize);
+
+    public Page<Order> pageAllOrdersByUser(Integer userId, int pageNo, int pageSize);
+
+    public Order showOrderByOrderId(String orderId);
 }

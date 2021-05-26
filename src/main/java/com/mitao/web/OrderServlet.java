@@ -1,12 +1,10 @@
 package com.mitao.web;
 
-import com.mitao.pojo.Cart;
-import com.mitao.pojo.Order;
-import com.mitao.pojo.OrderItem;
-import com.mitao.pojo.User;
+import com.mitao.pojo.*;
 import com.mitao.service.OrderService;
 import com.mitao.service.impl.OrderServiceImpl;
 import com.mitao.utils.JdbcUtils;
+import com.mitao.utils.WebUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -53,6 +51,68 @@ public class OrderServlet extends BaseServlet {
         request.setAttribute("myOrders", myOrders);
         request.getRequestDispatcher("/pages/order/order.jsp").forward(request,response);
     }
+
+    protected void pageAllOrders(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int pageNo = WebUtils.parseInt(request.getParameter("pageNo"), 1);
+        int pageSize = WebUtils.parseInt(request.getParameter("pageSize"), Page.PAGE_SIZE);
+
+        Page<Order> page = orderService.pageAllOrders(pageNo, pageSize);
+
+        page.setUrl("orderServlet?action=pageAllOrders");
+
+        request.setAttribute("page", page);
+        request.getRequestDispatcher("/pages/manager/order_manager.jsp").forward(request,response);
+    }
+
+    protected void pageAllOrdersByUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int pageNo = WebUtils.parseInt(request.getParameter("pageNo"), 1);
+        int pageSize = WebUtils.parseInt(request.getParameter("pageSize"), Page.PAGE_SIZE);
+
+        User loginUser = (User)request.getSession().getAttribute("user");
+
+        Integer userId = loginUser.getId();
+
+        Page<Order> page = orderService.pageAllOrdersByUser(userId, pageNo, pageSize);
+
+        page.setUrl("orderServlet?action=pageAllOrdersByUser");
+
+        request.setAttribute("page", page);
+        request.getRequestDispatcher("/pages/order/order.jsp").forward(request,response);
+    }
+
+    protected void sendOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String orderId = request.getParameter("orderId");
+
+        orderService.sendOrder(orderId);
+
+        response.sendRedirect(request.getHeader("Referer"));
+
+    }
+
+    protected void receiveOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String orderId = request.getParameter("orderId");
+
+        orderService.receiveOrder(orderId);
+
+        response.sendRedirect(request.getHeader("Referer"));
+
+    }
+
+    protected void showOrderDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String orderId = request.getParameter("orderId");
+
+
+
+        Order order = orderService.showOrderByOrderId(orderId);
+        List<OrderItem> orderItems = orderService.showOrderDetail(orderId);
+        request.setAttribute("orderItems", orderItems);
+        request.setAttribute("order", order);
+
+        request.getRequestDispatcher("/pages/order/order_detail.jsp").forward(request,response);
+
+    }
+
+
 
 
 }

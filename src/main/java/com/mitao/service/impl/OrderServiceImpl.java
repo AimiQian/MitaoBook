@@ -69,4 +69,59 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderItem> showOrderDetail(String orderId) {
         return orderItemDao.queryOrderItemByOrderId(orderId);
     }
+
+    @Override
+    public Page<Order> pageAllOrders(int pageNo, int pageSize) {
+        Page<Order> page = new Page<>();
+        page.setPageSize(pageSize);
+        Integer pageTotalCount = orderDao.queryOrdersPageTotalCount();
+        page.setPageTotalCount(pageTotalCount);
+
+        Integer pageTotal = pageTotalCount % pageSize > 0 ? pageTotalCount / pageSize + 1 : pageTotalCount / pageSize;
+        page.setPageTotal(pageTotal);
+
+        page.setPageNo(pageNo);
+
+        Integer begin = (page.getPageNo() - 1) * pageSize;
+
+        if(begin < 0){
+            begin = 0;
+        }
+
+        List<Order> items = orderDao.queryOrdersPageItems(begin,pageSize);
+
+        page.setItems(items);
+
+        return page;
+    }
+
+    @Override
+    public Page<Order> pageAllOrdersByUser(Integer userId, int pageNo, int pageSize) {
+        Page<Order> page = new Page<>();
+        page.setPageSize(pageSize);
+        Integer pageTotalCount = orderDao.queryOrdersPageByUserTotalCount(userId);
+        page.setPageTotalCount(pageTotalCount);
+
+        Integer pageTotal = pageTotalCount % pageSize > 0 ? pageTotalCount / pageSize + 1 : pageTotalCount / pageSize;
+        page.setPageTotal(pageTotal);
+
+        page.setPageNo(pageNo);
+
+        Integer begin = (page.getPageNo() - 1) * pageSize;
+
+        if(begin < 0){
+            begin = 0;
+        }
+
+        List<Order> items = orderDao.queryOrdersPageItemsByUser(userId, begin,pageSize);
+
+        page.setItems(items);
+
+        return page;
+    }
+
+    @Override
+    public Order showOrderByOrderId(String orderId) {
+        return orderDao.queryOrderByOrderId(orderId);
+    }
 }

@@ -28,9 +28,9 @@
 				<td>日期</td>
 				<td>金额</td>
 				<td>状态</td>
-				<td>详情</td>
+				<td colspan="2">Action</td>
 			</tr>
-			<c:forEach items="${requestScope.myOrders}" var="order">
+			<c:forEach items="${requestScope.page.items}" var="order">
 				<tr>
 					<td>${order.createTime}</td>
 					<td>${order.price}</td>
@@ -44,12 +44,21 @@
 					<c:if test="${order.status == 2}">
 						<td>Delivered</td>
 					</c:if>
-					<td><a href="#">Details</a></td>
+					<td><a href="orderServlet?action=showOrderDetail&orderId=${order.orderId}&pageNo=${requestScope.page.pageNo}">Details</a></td>
+					<c:if test="${order.status == 1}">
+						<td><button><a href="orderServlet?action=receiveOrder&orderId=${order.orderId}">Received</a></button></td>
+					</c:if>
+					<c:if test="${order.status != 1}">
+						<td>:)  =3</td>
+					</c:if>
+
 				</tr>
 			</c:forEach>
 			
 
 		</table>
+
+		<%@include file="/pages/common/page_nav.jsp"%>
 		
 	
 	</div>

@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,7 +7,7 @@
 	<title>尚硅谷会员注册页面</title>
 	<%@ include file="/pages/common/head.jsp" %>
 	<style type="text/css">
-		h1 {
+		h1, h2{
 			text-align: center;
 			margin-top: 200px;
 		}
@@ -24,6 +25,10 @@
 		</div>
 		
 		<div id="main">
+
+			<c:if test="${requestScope.isManager eq false}">
+				<h2>You do not have administrative privilege!</h2>
+			</c:if>
 		
 			<h1>欢迎回来 <a href="index.jsp">转到主页</a></h1>
 	
