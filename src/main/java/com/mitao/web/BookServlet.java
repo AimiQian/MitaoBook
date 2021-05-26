@@ -65,6 +65,9 @@ public class BookServlet extends BaseServlet {
 
 
         Page<Book> page = bookService.page(pageNo,pageSize);
+
+        page.setUrl("manager/bookServlet?action=page");
+
         request.setAttribute("page",page);
         request.getRequestDispatcher("/pages/manager/book_manager.jsp").forward(request,response);
     }

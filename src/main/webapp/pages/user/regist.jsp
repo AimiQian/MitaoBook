@@ -8,6 +8,23 @@
 
 	<script type="text/javascript">
 		$(function(){
+			$("#username").blur(function () {
+				var username = this.value;
+
+				$.getJSON("${basePath}userServlet", "action=ajaxExitUsername&username=" + username, function(data){
+					if(data.existsUsername){
+						$("span.errorMsg").text("Username Exists!!");
+					}
+					else{
+						$("span.errorMsg").text("Username Available!!");
+					}
+				});
+			});
+
+			$("#code_img").click(function () {
+				this.src="${basePath}kaptcha.jpg?d=" + new Date();
+			});
+
 			$("#sub_btn").click(function (){
 				//Validate username
 				var usernameText = $("#username").val();
@@ -108,8 +125,8 @@
 									<br />
 									<br />
 									<label>验证码：</label>
-									<input class="itxt" type="text" style="width: 150px;" name="code" id="code"/>
-									<img alt="" src="static/img/code.bmp" style="float: right; margin-right: 40px">
+									<input class="itxt" type="text" style="width: 80px;" name="code" id="code"/>
+									<img id="code_img" alt="" src="kaptcha.jpg" style="float: right; margin-right: 40px; width: 110px; height: 30px">
 									<br />
 									<br />
 									<input type="submit" value="注册" id="sub_btn" />

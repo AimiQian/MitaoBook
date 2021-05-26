@@ -3,7 +3,7 @@ package com.mitao.pojo;
 import java.util.List;
 
 public class Page <T>{
-    public static final Integer PAGE_SIZE = 2;
+    public static final Integer PAGE_SIZE = 4;
     //current page No
     private Integer pageNo;
     //total page no
@@ -15,15 +15,18 @@ public class Page <T>{
     //current page's items
     private List<T> items;
 
-    public Page() {
+    private String url;
+
+    public String getUrl() {
+        return url;
     }
 
-    public Page(Integer pageNo, Integer pageTotal, Integer pageSize, Integer pageTotalCount, List<T> items) {
-        this.pageNo = pageNo;
-        this.pageTotal = pageTotal;
-        this.pageSize = pageSize;
-        this.pageTotalCount = pageTotalCount;
-        this.items = items;
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+
+    public Page() {
     }
 
     public Integer getPageNo() {

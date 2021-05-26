@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,28 +22,23 @@
 				<td>金额</td>
 				<td>详情</td>
 				<td>发货</td>
-				
-			</tr>		
-			<tr>
-				<td>2015.04.23</td>
-				<td>90.00</td>
-				<td><a href="#">查看详情</a></td>
-				<td><a href="#">点击发货</a></td>
-			</tr>	
-			
-			<tr>
-				<td>2015.04.20</td>
-				<td>20.00</td>
-				<td><a href="#">查看详情</a></td>
-				<td>已发货</td>
-			</tr>	
-			
-			<tr>
-				<td>2014.01.23</td>
-				<td>190.00</td>
-				<td><a href="#">查看详情</a></td>
-				<td>等待收货</td>
-			</tr>		
+			</tr>
+			<c:forEach items="${requestScope.allOrders}" var="order">
+				<tr>
+					<td>${order.createTime}</td>
+					<td>${order.price}</td>
+					<td><a href="#">Details</a></td>
+					<c:if test="${order.status == 0}">
+						<td><a href="#">Click to ship</a></td>
+					</c:if>
+					<c:if test="${order.status == 1}">
+						<td>Shipped</td>
+					</c:if>
+					<c:if test="${order.status == 2}">
+						<td>Delivered</td>
+					</c:if>
+				</tr>
+			</c:forEach>
 		</table>
 	</div>
 

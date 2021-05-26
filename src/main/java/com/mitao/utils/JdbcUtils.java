@@ -14,6 +14,7 @@ public class JdbcUtils {
     private static DruidDataSource dataSource;
 
     private static final com.alibaba.druid.pool.DruidDataSourceFactory DruidDataSourceFactory = null;
+    private static ThreadLocal<Connection> connThread = new ThreadLocal<Connection>();
 
     static {
         try {
@@ -36,14 +37,60 @@ public class JdbcUtils {
      * @return
      */
     public static Connection getConnection(){
-        Connection conn = null;
-        try {
-            conn = dataSource.getConnection();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        Connection conn = connThread.get();
 
+        if(conn == null){
+            try {
+                conn = dataSource.getConnection();
+                connThread.set(conn);
+                conn.setAutoCommit(false);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
         return conn;
+//        Connection conn = null;
+//        try {
+//            conn = dataSource.getConnection();
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//        }
+    }
+
+    public static void commitAndClose(){
+        Connection conn = connThread.get();
+        if(conn != null ){
+            try {
+                conn.commit();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }finally{
+                try {
+                    conn.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        }
+        connThread.remove();
+    }
+
+    public static void rollbackAndClose(){
+        Connection conn = connThread.get();
+        if(conn != null ) {
+            try {
+                conn.rollback();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } finally {
+                try {
+                    conn.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        }
+        connThread.remove();
     }
 
     /**

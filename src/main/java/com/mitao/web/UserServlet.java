@@ -1,5 +1,8 @@
 package com.mitao.web;
 
+import com.google.code.kaptcha.Constants;
+import com.google.code.kaptcha.servlet.KaptchaServlet;
+import com.google.gson.Gson;
 import com.mitao.pojo.User;
 import com.mitao.service.UserService;
 import com.mitao.service.impl.UserServiceImpl;
@@ -12,6 +15,8 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet(name = "UserServlet", value = "/userServlet")
 public class UserServlet extends BaseServlet {
@@ -29,11 +34,20 @@ public class UserServlet extends BaseServlet {
             req.getRequestDispatcher("/pages/user/login.jsp").forward(req,resp);
         }
         else{
+            req.getSession().setAttribute("user",login);
             req.getRequestDispatcher("/pages/user/login_success.jsp").forward(req,resp);
         }
     }
 
+    protected void logout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+            req.getSession().invalidate();
+            resp.sendRedirect(req.getContextPath());
+    }
+
     protected void register(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String token = (String)req.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
+        req.getSession().removeAttribute(Constants.KAPTCHA_SESSION_KEY);
+
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
@@ -42,7 +56,7 @@ public class UserServlet extends BaseServlet {
         User user = WebUtils.copyParamToBean(req.getParameterMap(), new User());
 
         //bnbnp
-        if ("bnbnp".equalsIgnoreCase(code)) {
+        if (token!=null && token.equalsIgnoreCase(code)) {
             if (userService.exitsUsername(username)) {
 
                 req.setAttribute("msg", "Username Exists!!");
@@ -62,5 +76,18 @@ public class UserServlet extends BaseServlet {
             req.setAttribute("email", email);
             req.getRequestDispatcher("/pages/user/regist.jsp").forward(req, resp);
         }
+    }
+
+    protected void ajaxExitUsername(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //get username
+        String username = req.getParameter("username");
+        boolean existsUsername = userService.exitsUsername(username);
+        Map<String,Object> resultMap = new HashMap<>();
+        resultMap.put("existsUsername", existsUsername);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(resultMap);
+
+        resp.getWriter().write(json);
     }
 }
