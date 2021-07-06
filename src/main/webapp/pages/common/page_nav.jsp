@@ -8,8 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div id="page_nav">
   <c:if test="${requestScope.page.pageNo > 1}">
-    <a href="${requestScope.page.url}&pageNo=1">首页</a>
-    <a href="${requestScope.page.url}&pageNo=${requestScope.page.pageNo-1}">上一页</a>
+    <button><a href="${requestScope.page.url}&pageNo=1" style="text-decoration:none;">FirstPage</a></button>
+    <button><a href="${requestScope.page.url}&pageNo=${requestScope.page.pageNo-1}" style="text-decoration:none;">◁ Prev</a></button>
     <%--				<a href="#">${requestScope.page.pageNo-1}</a>--%>
   </c:if>
   <%--			Begin--%>
@@ -50,12 +50,12 @@
 
   <c:if test="${requestScope.page.pageNo < requestScope.page.pageTotal}">
     <%--				<a href="#">${requestScope.page.pageNo+1}</a>--%>
-    <a href="${requestScope.page.url}&pageNo=${requestScope.page.pageNo+1}">下一页</a>
-    <a href="${requestScope.page.url}&pageNo=${requestScope.page.pageTotal}">末页</a>
+    <button><a href="${requestScope.page.url}&pageNo=${requestScope.page.pageNo+1}" style="text-decoration:none;">Next ▷</a></button>
+    <button><a href="${requestScope.page.url}&pageNo=${requestScope.page.pageTotal}" style="text-decoration:none;">LastPage</a></button>
   </c:if>
 
-  共${requestScope.page.pageTotal}页，${requestScope.page.pageTotalCount}条记录 到第<input value="${param.pageNo}" name="pn" id="pn_input"/>页
-  <input id="searchPageBtn" type="button" value="确定">
+  { 🗊 Total ${requestScope.page.pageTotal} Pages} { 📚 Total ${requestScope.page.pageTotalCount} Items} ♩ ♪ ♫ ♬ Page <input value="${param.pageNo}" name="pn" id="pn_input"/>
+  <input id="searchPageBtn" type="button" value="Go">🚀
 
   <script type="text/javascript">
     $(function () {

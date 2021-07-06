@@ -8,12 +8,8 @@
 	<%@ include file="/pages/common/head.jsp" %>
 </head>
 <body>
-	
-	<div id="header">
-			<img class="logo_img" alt="" src="static/img/logo.gif" >
-			<span class="wel_word">购物车</span>
 		<%@ include file="/pages/common/login_success_menu.jsp"%>
-	</div>
+
 
 	<script type="text/javascript">
 		$(function () {
@@ -43,15 +39,15 @@
 
 	</script>
 	
-	<div id="main">
-	
+	<div class="container" id="main">
+		<h2 style="text-align: center">Shopping Cart</h2>
 		<table>
 			<tr>
-				<td>商品名称</td>
-				<td>数量</td>
-				<td>单价</td>
-				<td>金额</td>
-				<td>操作</td>
+				<td>Product Name</td>
+				<td>Quantity</td>
+				<td>Price</td>
+				<td>Total</td>
+				<td>Action</td>
 			</tr>
 			<c:if test="${empty sessionScope.cart.items}">
 				<tr>
@@ -68,7 +64,7 @@
 						</td>
 						<td>${entry.value.price}</td>
 						<td>${entry.value.totalPrice}</td>
-						<td><a class ="deleteItem" href="cartServlet?action=deleteItem&id=${entry.value.id}">删除</a></td>
+						<td><a class ="deleteItem" href="cartServlet?action=deleteItem&id=${entry.value.id}">Delete</a></td>
 					</tr>
 				</c:forEach>
 			</c:if>
@@ -76,7 +72,7 @@
 
 		<c:if test="${not empty sessionScope.cart.items}">
 			<div class="cart_info">
-				<span class="cart_span">购物车中共有<span class="b_count">${sessionScope.cart.totalCount}</span>件商品</span>
+				<span class="cart_span">Total<span class="b_count">${sessionScope.cart.totalCount}</span> items in your cart.</span>
 				<span class="cart_span">Subtotal $<span class="b_price">${sessionScope.cart.totalPrice}</span></span>
 				<span class="cart_span"><a id="clearCart" href="cartServlet?action=clear">Empty The Cart</a></span>
 				<span class="cart_span"><a href="orderServlet?action=createOrder">CheckOut</a></span>

@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>图书管理</title>
+	<title>Book Manager</title>
 	<%@ include file="/pages/common/head.jsp" %>
 	<script type="text/javascript">
 		$(function(){
@@ -16,22 +16,18 @@
 	</script>
 </head>
 <body>
-	
-	<div id="header">
-			<img class="logo_img" alt="" src="static/img/logo.gif" >
-			<span class="wel_word">图书管理系统</span>
 			<%@ include file="/pages/common/managermenu.jsp"%>
-	</div>
 	
-	<div id="main">
+	<div class="container" id="main">
+		<h2 style="text-align: center">Book Management</h2>
 		<table>
 			<tr>
-				<td>名称</td>
-				<td>价格</td>
-				<td>作者</td>
-				<td>销量</td>
-				<td>库存</td>
-				<td colspan="2">操作</td>
+				<td>Name</td>
+				<td>Price</td>
+				<td>Author</td>
+				<td>Sales</td>
+				<td>Stock</td>
+				<td colspan="2">Action</td>
 			</tr>		
 			<c:forEach items="${requestScope.page.items}" var="book">
 					<tr>
@@ -53,7 +49,7 @@
 				<td></td>
 				<td></td>
 				<td></td>
-				<td><a href="pages/manager/book_edit.jsp?method=add&pageNo=${requestScope.page.pageTotal}">添加图书</a></td>
+				<td><a href="pages/manager/book_edit.jsp?method=add&pageNo=${requestScope.page.pageTotal}">Add Book</a></td>
 			</tr>
 		</table>
 

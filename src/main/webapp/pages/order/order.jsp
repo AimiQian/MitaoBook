@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>我的订单</title>
+	<title>My Orders</title>
 	<%@ include file="/pages/common/head.jsp" %>
 	<style type="text/css">
 		h1 {
@@ -14,21 +14,17 @@
 	</style>
 </head>
 <body>
-	
-	<div id="header">
-			<img class="logo_img" alt="" src="static/img/logo.gif" >
-			<span class="wel_word">我的订单</span>
 		<%@ include file="/pages/common/login_success_menu.jsp"%>
-	</div>
-	
-	<div id="main">
-		
+
+	<div class="container" id="main">
+		<h2 style="text-align: center">My Orders</h2>
 		<table>
 			<tr>
-				<td>日期</td>
-				<td>金额</td>
-				<td>状态</td>
-				<td colspan="2">Action</td>
+				<td>Order Date</td>
+				<td>Total</td>
+				<td>Status</td>
+				<td>Details</td>
+				<td>Action</td>
 			</tr>
 			<c:forEach items="${requestScope.page.items}" var="order">
 				<tr>
@@ -48,8 +44,11 @@
 					<c:if test="${order.status == 1}">
 						<td><button><a href="orderServlet?action=receiveOrder&orderId=${order.orderId}">Received</a></button></td>
 					</c:if>
-					<c:if test="${order.status != 1}">
-						<td>:)  =3</td>
+					<c:if test="${order.status == 0}">
+						<td>Waiting</td>
+					</c:if>
+					<c:if test="${order.status == 2}">
+						<td>:)</td>
 					</c:if>
 
 				</tr>

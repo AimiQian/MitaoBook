@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>结算页面</title>
+<title>CheckOut Page</title>
 	<%@ include file="/pages/common/head.jsp" %>
 <style type="text/css">
 	h1 {
@@ -13,14 +13,9 @@
 </style>
 </head>
 <body>
-	
-	<div id="header">
-			<img class="logo_img" alt="" src="static/img/logo.gif" >
-			<span class="wel_word">结算</span>
 		<%@ include file="/pages/common/login_success_menu.jsp"%>
-	</div>
 	
-	<div id="main">
+	<div class="container" id="main">
 		
 		<h1>You have checked out，Order Number: ${sessionScope.orderId}</h1>
 		

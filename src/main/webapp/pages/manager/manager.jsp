@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>后台管理</title>
+<title>manager</title>
 	<%@ include file="/pages/common/head.jsp" %>
 <style type="text/css">
 	h1 {
@@ -13,15 +13,11 @@
 </style>
 </head>
 <body>
+
+<%@ include file="/pages/common/managermenu.jsp"%>
 	
-	<div id="header">
-			<img class="logo_img" alt="" src="static/img/logo.gif" >
-			<span class="wel_word">后台管理系统</span>
-			<%@ include file="/pages/common/managermenu.jsp"%>
-	</div>
-	
-	<div id="main">
-		<h1>欢迎管理员进入后台管理系统</h1>
+	<div class="container" id="main">
+		<h1>Welcome To Admin Management System Page</h1>
 	</div>
 
 	<%@include file="/pages/common/footer.jsp"%>

@@ -9,24 +9,19 @@
 </head>
 <body>
 
-<div id="header">
-    <img class="logo_img" alt="" src="static/img/logo.gif" >
-    <span class="wel_word">Order Detail</span>
     <%@ include file="/pages/common/login_success_menu.jsp"%>
-</div>
 
-<div id="main">
+<div class="container" id="main">
         <div class="order_info">
             <span class="cart_span">Order Number<span class="b_count">${requestScope.order.orderId}</span></span>
             <span class="cart_span">Subtotal $<span class="b_price">${requestScope.order.price}</span></span>
-
         </div>
     <table>
         <tr>
-            <td>商品名称</td>
-            <td>数量</td>
-            <td>单价</td>
-            <td>金额</td>
+            <td>Book Name</td>
+            <td>Quantity</td>
+            <td>Price</td>
+            <td>Total</td>
         </tr>
 
         <c:forEach items="${requestScope.orderItems}" var="order">

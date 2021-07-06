@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>尚硅谷会员注册页面</title>
+	<title>MiTao Login Success Page</title>
 	<%@ include file="/pages/common/head.jsp" %>
 	<style type="text/css">
 		h1, h2{
@@ -18,19 +18,16 @@
 	</style>
 </head>
 <body>
-		<div id="header">
-				<img class="logo_img" alt="" src="static/img/logo.gif" >
-				
-			<%@ include file="/pages/common/login_success_menu.jsp"%>
-		</div>
-		
-		<div id="main">
+		<%@ include file="/pages/common/login_success_menu.jsp"%>
+
+		<div class="container" id="main">
 
 			<c:if test="${requestScope.isManager eq false}">
 				<h2>You do not have administrative privilege!</h2>
 			</c:if>
 		
-			<h1>欢迎回来 <a href="index.jsp">转到主页</a></h1>
+<%--			<h1>Welcome Back! <a href="index.jsp">Back To The Main Page</a></h1>--%>
+			<h1>Welcome <span class="um_span">${sessionScope.user.username}</span> To MiTao BookStore!! <a href="index.jsp">Main Page</a></h1>
 	
 		</div>
 

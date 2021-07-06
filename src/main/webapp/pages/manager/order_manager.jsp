@@ -4,24 +4,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>订单管理</title>
+<title>Order Management</title>
 	<%@ include file="/pages/common/head.jsp" %>
 </head>
 <body>
+
+<%@ include file="/pages/common/managermenu.jsp"%>
 	
-	<div id="header">
-			<img class="logo_img" alt="" src="static/img/logo.gif" >
-			<span class="wel_word">订单管理系统</span>
-			<%@ include file="/pages/common/managermenu.jsp"%>
-	</div>
-	
-	<div id="main">
+	<div class="container" id="main">
+		<h2 style="text-align: center">Order Management</h2>
 		<table>
 			<tr>
-				<td>日期</td>
-				<td>金额</td>
-				<td>详情</td>
-				<td>发货</td>
+				<td>Order Date</td>
+				<td>ToTal</td>
+				<td>Details</td>
+				<td>Action</td>
 			</tr>
 			<c:forEach items="${requestScope.page.items}" var="order">
 				<tr>

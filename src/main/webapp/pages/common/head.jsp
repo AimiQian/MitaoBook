@@ -13,3 +13,6 @@
 <base href="<%=basePath%>">
 <link type="text/css" rel="stylesheet" href="static/css/style.css" >
 <script type="text/javascript" src="static/script/jquery-3.6.0.js" ></script>
+<link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css">
+<script src="static/script/jquery.min.js"></script>
+<script src="static/script/bootstrap.min.js"></script>

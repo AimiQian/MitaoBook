@@ -3,7 +3,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>尚硅谷会员注册页面</title>
+	<title>MiTao Register Success Page</title>
 	<%@ include file="/pages/common/head.jsp" %>
 	<style type="text/css">
 		h1 {
@@ -17,16 +17,10 @@
 	</style>
 </head>
 <body>
-		<div id="header">
-				<img class="logo_img" alt="" src="static/img/logo.gif" >
-				<span class="wel_word"></span>
-			<%@ include file="/pages/common/login_success_menu.jsp"%>
-		</div>
+		<%@ include file="/pages/common/login_success_menu.jsp"%>
 		
-		<div id="main">
-		
-			<h1>注册成功! <a href="index.jsp">转到主页</a></h1>
-	
+		<div class="container" id="main">
+			<h1>Successfully Registered! <a href="index.jsp">Main Page</a></h1>
 		</div>
 
 		<%@include file="/pages/common/footer.jsp"%>
