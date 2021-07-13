@@ -5,6 +5,7 @@
   Time: 11:52 AM
   To change this template use File | Settings | File Templates.
 --%>
+<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";

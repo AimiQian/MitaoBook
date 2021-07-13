@@ -16,7 +16,7 @@
 						$("span.errorMsg").text("Username Exists!!");
 					}
 					else{
-						$("span.errorMsg").text("Username 5-12 words");
+						$("span.errorMsg").text("Username Available");
 					}
 				});
 			});
