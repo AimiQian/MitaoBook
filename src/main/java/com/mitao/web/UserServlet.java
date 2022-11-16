@@ -40,6 +40,7 @@ public class UserServlet extends BaseServlet {
     }
 
     protected void logout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+            req.getSession().removeAttribute("user");
             req.getSession().invalidate(); 
             System.out.print(req.getContextPath());
             resp.sendRedirect(req.getContextPath());
