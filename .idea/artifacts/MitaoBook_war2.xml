@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="MitaoBook:war2">
+    <output-path>$PROJECT_DIR$/out/artifacts/MitaoBook_war2</output-path>
+    <root id="archive" name="MitaoBook_war.war">
+      <element id="artifact" artifact-name="MitaoBook:war exploded" />
+    </root>
+  </artifact>
+</component>
