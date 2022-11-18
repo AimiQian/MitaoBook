@@ -43,6 +43,7 @@ public class UserServlet extends BaseServlet {
             req.getSession().removeAttribute("user");
             req.getSession().invalidate(); 
             System.out.print(req.getContextPath());
+            resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
             resp.sendRedirect(req.getContextPath());
     }
 
