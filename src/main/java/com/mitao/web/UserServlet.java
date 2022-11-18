@@ -40,11 +40,23 @@ public class UserServlet extends BaseServlet {
     }
 
     protected void logout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            req.getSession().removeAttribute("user");
-            req.getSession().invalidate(); 
-            System.out.print(req.getContextPath());
-            resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-            resp.sendRedirect(req.getContextPath());
+            HttpSession session = req.getSession();
+            if(sessuib != null){
+                try{
+                session.removeAttribute("user");
+                session.invalidate(); 
+                resp.sendRedirect(req.getContextPath());}
+                catch (Exception ex){
+                    System.out.println(ex.getMessage());
+                }
+            }
+            
+            
+//             req.getSession().removeAttribute("user");
+//             req.getSession().invalidate(); 
+//             System.out.print(req.getContextPath());
+//             resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+//             resp.sendRedirect(req.getContextPath());
     }
 
     protected void register(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
