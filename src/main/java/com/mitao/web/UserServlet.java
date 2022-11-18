@@ -41,7 +41,7 @@ public class UserServlet extends BaseServlet {
 
     protected void logout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             HttpSession session = req.getSession();
-            if(sessuib != null){
+            if(session != null){
                 try{
                 session.removeAttribute("user");
                 session.invalidate(); 
@@ -49,6 +49,9 @@ public class UserServlet extends BaseServlet {
                 catch (Exception ex){
                     System.out.println(ex.getMessage());
                 }
+            }
+            else{
+                req.getRequestDispatcher("/index.jsp").forward(req, resp);
             }
             
             
